@@ -7,11 +7,9 @@ Stairs = False
 Walls = False
 Fences = False
 Panes = False
-Bars = False
 Buttons = False
 Plates = False
 Doors = False
-
 
 collectionWood = False
 collectionStone = False

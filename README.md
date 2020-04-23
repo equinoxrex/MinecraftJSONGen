@@ -33,7 +33,7 @@
  
  #### Wood Collections
   Creates a wood set based on the input name, which would just be the name of the wood without any additions.
-  This currently includes Logs, Stripped Logs, Wood, Stripped Wood, Leaves, Planks, Slabs, and Stairs.
+  This currently includes Logs, Stripped Logs, Wood, Stripped Wood, Saplings, Leaves, Planks, Slabs, Stairs, and Fences.
   
   
   

@@ -23,7 +23,6 @@ optionStairs = BooleanVar(value = setup.Stairs)
 optionWalls = BooleanVar(value = setup.Walls)
 optionFences = BooleanVar(value = setup.Fences)
 optionPanes = BooleanVar(value = setup.Panes)
-optionBars = BooleanVar(value = setup.Bars)
 optionButtons = BooleanVar(value = setup.Buttons)
 optionPlates = BooleanVar(value = setup.Plates)
 optionDoors = BooleanVar(value = setup.Doors)
@@ -36,6 +35,9 @@ optionCollectionColour = BooleanVar(value = setup.collectionColour)
 
 optionPlural = BooleanVar(value = setup.depluralize)
 optionWrite = BooleanVar(value = setup.overwrite)
+
+colours = ["black","blue","brown","cyan","gray","green","light_blue","light_grey",
+           "lime","magenta","orange","pink","purple","red","white","yellow"]
 
 def formatString(stringvar):
     string = stringvar.get()
@@ -53,7 +55,7 @@ def updateRadio():
     elif (optionBlockstate.get() == "cube_column"):
         menuText.set("Not Rotatable - Cube Column")
     elif (optionBlockstate.get() == "cube_bottom_top"):
-        menuText.set("Not Rotatable - Cube Bottom Top")
+        menuText.set("Not Rotatable - CubeBottomTop")
     elif (optionBlockstate.get() == "orientable"):
         menuText.set("Not Rotatable - Orientable")
     elif (optionBlockstate.get() == "rotatable_three"):
@@ -155,7 +157,7 @@ def createFiles(type, name):
                 with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_slab.json", write) as file:
                     json.dump({"parent": f"{setup.modID}:block/{depluralize(name)}_slab"}, file, indent = 4)
         elif(type == "stairs"):
-            if(not optionCollectionWood):
+            if(not optionCollectionWood.get()):
                 with open(f"assets/{setup.modID}/blockstates/{depluralize(name)}_stairs.json", write) as file:
                     json.dump({"variants": {"facing=east,half=bottom,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs"},"facing=west,half=bottom,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "y": 180,"uvlock": True}, "facing=south,half=bottom,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "y": 90, "uvlock": True},"facing=north,half=bottom,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "y": 270,"uvlock": True}, "facing=east,half=bottom,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer"},"facing=west,half=bottom,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 180,"uvlock": True}, "facing=south,half=bottom,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 90, "uvlock": True},"facing=north,half=bottom,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 270,"uvlock": True}, "facing=east,half=bottom,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 270, "uvlock": True},"facing=west,half=bottom,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 90,"uvlock": True}, "facing=south,half=bottom,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer"},"facing=north,half=bottom,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "y": 180,"uvlock": True}, "facing=east,half=bottom,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner"},"facing=west,half=bottom,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 180,"uvlock": True}, "facing=south,half=bottom,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 90, "uvlock": True},"facing=north,half=bottom,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 270,"uvlock": True}, "facing=east,half=bottom,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 270, "uvlock": True},"facing=west,half=bottom,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 90,"uvlock": True}, "facing=south,half=bottom,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner"},"facing=north,half=bottom,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "y": 180,"uvlock": True}, "facing=east,half=top,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "x": 180, "uvlock": True},"facing=west,half=top,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "x": 180,"y": 180, "uvlock": True}, "facing=south,half=top,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "x": 180, "y": 90, "uvlock": True},"facing=north,half=top,shape=straight": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs", "x": 180,"y": 270, "uvlock": True}, "facing=east,half=top,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 90,"uvlock": True}, "facing=west,half=top,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 270,"uvlock": True}, "facing=south,half=top,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 180,"uvlock": True}, "facing=north,half=top,shape=outer_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "uvlock": True},"facing=east,half=top,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180,"uvlock": True}, "facing=west,half=top,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 180,"uvlock": True}, "facing=south,half=top,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 90,"uvlock": True}, "facing=north,half=top,shape=outer_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_outer", "x": 180, "y": 270,"uvlock": True}, "facing=east,half=top,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 90,"uvlock": True}, "facing=west,half=top,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 270,"uvlock": True}, "facing=south,half=top,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 180,"uvlock": True}, "facing=north,half=top,shape=inner_right": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "uvlock": True},"facing=east,half=top,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180,"uvlock": True}, "facing=west,half=top,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 180,"uvlock": True}, "facing=south,half=top,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 90,"uvlock": True}, "facing=north,half=top,shape=inner_left": {"model": f"{setup.modID}:block/{depluralize(name)}_stairs_inner", "x": 180, "y": 270,"uvlock": True}}}, file, indent = 4)
                 with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_stairs.json", write) as file:
@@ -189,33 +191,50 @@ def createFiles(type, name):
             with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_wall.json", write) as file:
                 json.dump({"parent": f"{setup.modID}:block/{depluralize(name)}_wall_inventory"}, file, indent = 4)
         elif(type == "fences"):
-            with open(f"assets/{setup.modID}/blockstates/{depluralize(name)}_wall.json", write) as file:
+            with open(f"assets/{setup.modID}/blockstates/{depluralize(name)}_fence.json", write) as file:
                 json.dump({"multipart": [{   "apply": { "model": f"{setup.modID}:block/{name}_fence_post" }},{   "when": { "north": "true" },"apply": { "model": f"{setup.modID}:block/{name}_fence_side", "uvlock": True }},{   "when": { "east": "true" },"apply": { "model": f"{setup.modID}:block/{name}_fence_side", "y": 90, "uvlock": True }},{   "when": { "south": "true" },"apply": { "model": f"{setup.modID}:block/{name}_fence_side", "y": 180, "uvlock": True }},{   "when": { "west": "true" },"apply": { "model": f"{setup.modID}:block/{name}_fence_side", "y": 270, "uvlock": True }}]}, file, indent = 4)
-            with open(f"assets/{setup.modID}/blockstates/{depluralize(name)}_wall.json", write) as file:
+            with open(f"assets/{setup.modID}/blockstates/{depluralize(name)}_fence_gate.json", write) as file:
                 json.dump({"variants": {"facing=south,in_wall=false,open=false": { "model": f"{setup.modID}:block/{name}_fence_gate", "uvlock": True },"facing=west,in_wall=false,open=false":  { "model": f"{setup.modID}:block/{name}_fence_gate", "uvlock": True, "y": 90 },"facing=north,in_wall=false,open=false": { "model": f"{setup.modID}:block/{name}_fence_gate", "uvlock": True, "y": 180 },"facing=east,in_wall=false,open=false":  { "model": f"{setup.modID}:block/{name}_fence_gate", "uvlock": True, "y": 270 },"facing=south,in_wall=false,open=true": { "model": f"{setup.modID}:block/{name}_fence_gate_open", "uvlock": True },"facing=west,in_wall=false,open=true":  { "model": f"{setup.modID}:block/{name}_fence_gate_open", "uvlock": True, "y": 90 },"facing=north,in_wall=false,open=true": { "model": f"{setup.modID}:block/{name}_fence_gate_open", "uvlock": True, "y": 180 },"facing=east,in_wall=false,open=true":  { "model": f"{setup.modID}:block/{name}_fence_gate_open", "uvlock": True, "y": 270 },"facing=south,in_wall=true,open=false": { "model": f"{setup.modID}:block/{name}_fence_gate_wall", "uvlock": True },"facing=west,in_wall=true,open=false":  { "model": f"{setup.modID}:block/{name}_fence_gate_wall", "uvlock": True, "y": 90 },"facing=north,in_wall=true,open=false": { "model": f"{setup.modID}:block/{name}_fence_gate_wall", "uvlock": True, "y": 180 },"facing=east,in_wall=true,open=false":  { "model": f"{setup.modID}:block/{name}_fence_gate_wall", "uvlock": True, "y": 270 },"facing=south,in_wall=true,open=true": { "model": f"{setup.modID}:block/{name}_fence_gate_wall_open", "uvlock": True },"facing=west,in_wall=true,open=true":  { "model": f"{setup.modID}:block/{name}_fence_gate_wall_open", "uvlock": True, "y": 90 },"facing=north,in_wall=true,open=true": { "model": f"{setup.modID}:block/{name}_fence_gate_wall_open", "uvlock": True, "y": 180 },"facing=east,in_wall=true,open=true":  { "model": f"{setup.modID}:block/{name}_fence_gate_wall_open", "uvlock": True, "y": 270 }}}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-            with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_wall.json", write) as file:
-                json.dump({}, file, indent = 4)
-
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_gate.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/template_fence_gate","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/template_fence_gate","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_gate_open.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/template_fence_gate_open","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/template_fence_gate_open","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_gate_wall.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/template_fence_gate_wall","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/template_fence_gate_wall","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_gate_wall_open.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/template_fence_gate_wall_open","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/template_fence_gate_wall_open","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_inventory.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/fence_inventory","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/fence_inventory","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_post.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/fence_post","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/fence_post","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{depluralize(name)}_fence_side.json", write) as file:
+                if(not optionCollectionWood.get()): json.dump({"parent": "block/fence_side","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                               json.dump({"parent": "block/fence_side","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_fence_gate.json", write) as file:
+                json.dump({"parent": f"{setup.modID}:block/{name}_fence_gate"}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/item/{depluralize(name)}_fence.json", write) as file:
+                json.dump({"parent": f"{setup.modID}:block/{name}_fence_inventory"}, file, indent = 4)
         elif(type == "panes"):
-            pass
-        elif(type == "bars"):
-            pass
+            with open(f"assets/{setup.modID}/blockstates/{name}_pane.json", write) as file:
+                json.dump({"multipart": [{   "apply": { "model": f"{setup.modID}:block/{name}_pane_post" }},{   "when": { "north": True },"apply": { "model": f"{setup.modID}:block/{name}_pane_side" }},{   "when": { "east": True },"apply": { "model": f"{setup.modID}:block/{name}_pane_side", "y": 90 }},{   "when": { "south": True },"apply": { "model": f"{setup.modID}:block/{name}_pane_side_alt" }},{   "when": { "west": True },"apply": { "model": f"{setup.modID}:block/{name}_pane_side_alt", "y": 90 }},{   "when": { "north": False },"apply": { "model": f"{setup.modID}:block/{name}_pane_noside" }},{   "when": { "east": False },"apply": { "model": f"{setup.modID}:block/{name}_pane_noside_alt" }},{   "when": { "south": False },"apply": { "model": f"{setup.modID}:block/{name}_pane_noside_alt", "y": 90 }},{   "when": { "west": False },"apply": { "model": f"{setup.modID}:block/{name}_pane_noside", "y": 270 }}]}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_pane_noside.json", write) as file:
+                json.dump({"parent": "block/template_glass_pane_noside","textures": {"pane": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_pane_noside_alt.json", write) as file:
+                json.dump({"parent": "block/template_glass_pane_noside_alt","textures": {"pane": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_pane_post.json", write) as file:
+                json.dump({"parent": "block/template_glass_pane_post","textures": {"edge": f"{setup.modID}:block/{name}_pane_top","pane": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_pane_side.json", write) as file:
+                json.dump({"parent": "block/template_glass_pane_side","textures": {"edge": f"{setup.modID}:block/{name}_pane_top","pane": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_pane_side_alt.json", write) as file:
+                json.dump({"parent": "block/template_glass_pane_side_alt","textures": {"edge": f"{setup.modID}:block/{name}_pane_top","pane": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/item/{name}_pane.json", write) as file:
+                json.dump({"parent": "item/generated","textures": {"layer0": f"{setup.modID}:item/{name}"}}, file, indent = 4)
         elif(type == "buttons"):
             pass
         elif(type == "plates"):
@@ -227,7 +246,7 @@ def createFiles(type, name):
         exit()
 
 def runGenerator(name):
-    if(optionCollectionWood.get() or optionCollectionStone.get() or optionCollectionStonePlus.get() or optionCollectionGlass.get()):
+    if(optionCollectionWood.get() or optionCollectionStone.get() or optionCollectionStonePlus.get() or optionCollectionGlass.get() or optionCollectionColour.get()):
         if(optionCollectionWood.get()):
             createFiles("cube", f"{name}_planks")
             createFiles("cube", f"{name}_leaves")
@@ -237,6 +256,7 @@ def runGenerator(name):
             createFiles("rotatable_three", f"stripped_{name}_log")
             createFiles("slabs", name)
             createFiles("stairs", name)
+            createFiles("fences", name)
             createFiles("cross", f"{name}_sapling")
         if(optionCollectionStone.get()):
             pass
@@ -244,15 +264,25 @@ def runGenerator(name):
             pass
         if(optionCollectionStonePlus.get()):
             pass
+        if(optionCollectionGlass.get()):
+            createFiles("cube", "glass")
+            createFiles("panes", "glass")
+            for i in range(0, 16):
+                createFiles("cube", colours[i]+"_stained_glass")
+                createFiles("panes", colours[i]+"_stained_glass")
+        if(optionCollectionColour.get()):
+            for i in range(0, 16):
+                createFiles("cube", colours[i] + f"_{name}")
     else:
         if(optionBlock.get()):  createFiles(optionBlockstate.get(), name)
         if(optionSlabs.get()):  createFiles("slabs", name)
         if(optionStairs.get()): createFiles("stairs", name)
         if(optionWalls.get()):  createFiles("walls", name)
+        if(optionFences.get()):  createFiles("fences", name)
 
 def runConfirmation():
     name = formatString(blockName)
-    if(name == ""):
+    if(not optionCollectionGlass.get() and name == ""):
         messagebox.showwarning(title = "Warning: Null Name", message = "Please enter a name for your block.")
     elif(messagebox.askokcancel(title = "Run Confirmation", message = f"Do you want to run the generator?\nBase Name: \"{name}\"")):
         runGenerator(name)
@@ -272,7 +302,7 @@ def main():
 
     sep2 = ttk.Separator(tab1).grid(row = 2, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
-    menuBlockstate = ttk.Menubutton(tab1, textvariable = menuText, width = 24)
+    menuBlockstate = ttk.Menubutton(tab1, textvariable = menuText, width = 23)
     menuBlockstate.menu = Menu(menuBlockstate)
     menuBlockstate["menu"] = menuBlockstate.menu
     menuBlockstate.menu.add_radiobutton(label = "Not Rotatable - Cube", variable = optionBlockstate, value = "cube", command = updateRadio)
@@ -293,27 +323,26 @@ def main():
     checkSlabs = ttk.Checkbutton(tab1, text = "Slabs", variable = optionSlabs).grid(row = 5, sticky = "W", padx = 20)
     checkStairs = ttk.Checkbutton(tab1, text = "Stairs", variable = optionStairs).grid(row = 6, sticky = "W", padx = 20)
     checkWalls = ttk.Checkbutton(tab1, text = "Walls", variable = optionWalls).grid(row = 7, sticky = "W", padx = 20)
-    checkFences = ttk.Checkbutton(tab1, text = "Fences", variable = optionFences, state = DISABLED).grid(row = 8, sticky = "W", padx = 20)
-    checkPanes = ttk.Checkbutton(tab1, text = "Panes", variable = optionPanes, state = DISABLED).grid(row = 9, sticky = "W", padx = 20)
-    checkBars = ttk.Checkbutton(tab1, text = "Bars", variable = optionBars, state = DISABLED).grid(row = 10, sticky = "W", padx = 20)
-    checkButtons = ttk.Checkbutton(tab1, text = "Buttons", variable = optionButtons, state = DISABLED).grid(row = 11, sticky = "W", padx = 20)
-    checkPlates = ttk.Checkbutton(tab1, text = "Pressure Plates", variable = optionPlates, state = DISABLED).grid(row = 12, columnspan = 2, sticky = "W", padx = 20)
-    checkDoors = ttk.Checkbutton(tab1, text = "Doors & Trapdoors", variable = optionDoors, state = DISABLED).grid(row = 13, columnspan = 2, sticky = "W", padx = 20)
+    checkFences = ttk.Checkbutton(tab1, text = "Fences", variable = optionFences).grid(row = 8, sticky = "W", padx = 20)
+    checkPanes = ttk.Checkbutton(tab1, text = "Panes", variable = optionPanes).grid(row = 9, sticky = "W", padx = 20)
+    checkButtons = ttk.Checkbutton(tab1, text = "Buttons", variable = optionButtons, state = DISABLED).grid(row = 10, sticky = "W", padx = 20)
+    checkPlates = ttk.Checkbutton(tab1, text = "Pressure Plates", variable = optionPlates, state = DISABLED).grid(row = 11, columnspan = 2, sticky = "W", padx = 20)
+    checkDoors = ttk.Checkbutton(tab1, text = "Doors & Trapdoors", variable = optionDoors, state = DISABLED).grid(row = 12, columnspan = 2, sticky = "W", padx = 20)
 
-    sep4 = ttk.Separator(tab1).grid(row = 14, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep4 = ttk.Separator(tab1).grid(row = 13, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
-    checkCollectionWood = ttk.Checkbutton(tab1, text = "Wood Collection", variable = optionCollectionWood).grid(row = 15, columnspan = 2, sticky = "W", padx = 20)
-    checkCollectionStone = ttk.Checkbutton(tab1, text = "Stone Collection", variable = optionCollectionStone, state = DISABLED).grid(row = 16, columnspan = 2, sticky = "W", padx = 20)
-    checkCollectionStonePlus = ttk.Checkbutton(tab1, text = "Stone Collection+", variable = optionCollectionStonePlus, state = DISABLED).grid(row = 17, columnspan = 2, sticky = "W", padx = 20)
-    checkCollectionGlass = ttk.Checkbutton(tab1, text = "Glass Collection", variable = optionCollectionGlass, state = DISABLED).grid(row = 18, columnspan = 2, sticky = "W", padx = 20)
-    checkCollectionColour = ttk.Checkbutton(tab1, text = "Colourful Collection", variable = optionCollectionColour, state = DISABLED).grid(row = 19, columnspan = 2, sticky = "W", padx = 20)
+    checkCollectionWood = ttk.Checkbutton(tab1, text = "Wood Collection", variable = optionCollectionWood).grid(row = 14, columnspan = 2, sticky = "W", padx = 20)
+    checkCollectionStone = ttk.Checkbutton(tab1, text = "Stone Collection", variable = optionCollectionStone, state = DISABLED).grid(row = 15, columnspan = 2, sticky = "W", padx = 20)
+    checkCollectionStonePlus = ttk.Checkbutton(tab1, text = "Stone Collection+", variable = optionCollectionStonePlus, state = DISABLED).grid(row = 16, columnspan = 2, sticky = "W", padx = 20)
+    #checkCollectionGlass = ttk.Checkbutton(tab1, text = "Glass Collection", variable = optionCollectionGlass).grid(row = 17, columnspan = 2, sticky = "W", padx = 20)
+    checkCollectionColour = ttk.Checkbutton(tab1, text = "Colourful Collection", variable = optionCollectionColour).grid(row = 18, columnspan = 2, sticky = "W", padx = 20)
 
-    sep5 = ttk.Separator(tab1).grid(row = 20, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep5 = ttk.Separator(tab1).grid(row = 19, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
-    quit = ttk.Button(tab1, text = "Quit", command = exit).grid(row = 21, column = 0, sticky = "W", padx = 20)
-    run = ttk.Button(tab1, text = "Run", command = runConfirmation).grid(row = 21, column = 1, sticky = "E", padx = 20)
+    quit = ttk.Button(tab1, text = "Quit", command = exit).grid(row = 20, column = 0, sticky = "W", padx = 20)
+    run = ttk.Button(tab1, text = "Run", command = runConfirmation).grid(row = 20, column = 1, sticky = "E", padx = 20)
 
-    sep6 = ttk.Separator(tab1).grid(row = 22, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep6 = ttk.Separator(tab1).grid(row = 21, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
 main()
 window.mainloop()

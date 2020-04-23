@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab",
-    "textures": {
-        "bottom": "modid:block/walnut_planks",
-        "top": "modid:block/walnut_planks",
-        "side": "modid:block/walnut_planks"
-    }
-}
