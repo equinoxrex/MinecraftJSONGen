@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "modid:block/stripped_walnut_log_top",
+        "side": "modid:block/stripped_walnut_log"
+    }
+}
