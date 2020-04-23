@@ -39,15 +39,18 @@ optionWrite = BooleanVar(value = setup.overwrite)
 colours = ["black","blue","brown","cyan","gray","green","light_blue","light_grey",
            "lime","magenta","orange","pink","purple","red","white","yellow"]
 
+
 def formatString(stringvar):
     string = stringvar.get()
     string = string.lower().replace(" ", "_")
     return string
 
+
 def depluralize(string):
     if(string[-1] == "s" and setup.depluralize):
         string = string[:-1]
     return string
+
 
 def updateRadio():
     if(optionBlockstate.get() == "cube"):
@@ -68,6 +71,7 @@ def updateRadio():
         menuText.set("Cross Model")
     elif (optionBlockstate.get() == "item"):
         menuText.set("No Block - 2D Item Only")
+
 
 def createFiles(type, name):
     if(optionWrite.get()): write = "w"
@@ -236,7 +240,19 @@ def createFiles(type, name):
             with open(f"assets/{setup.modID}/models/item/{name}_pane.json", write) as file:
                 json.dump({"parent": "item/generated","textures": {"layer0": f"{setup.modID}:item/{name}"}}, file, indent = 4)
         elif(type == "buttons"):
-            pass
+            with open(f"assets/{setup.modID}/blockstates/{name}_button.json", write) as file:
+                json.dump({"variants": {"face=floor,facing=east,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "y": 90 },"face=floor,facing=west,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "y": 270 },"face=floor,facing=south,powered=false": { "model": f"{setup.modID}:block/{name}_button", "y": 180 },"face=floor,facing=north,powered=false": { "model": f"{setup.modID}:block/{name}_button" },"face=wall,facing=east,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "uvlock": True, "x": 90, "y": 90 },"face=wall,facing=west,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "uvlock": True, "x": 90, "y": 270 },"face=wall,facing=south,powered=false": { "model": f"{setup.modID}:block/{name}_button", "uvlock": True, "x": 90, "y": 180 },"face=wall,facing=north,powered=false": { "model": f"{setup.modID}:block/{name}_button", "uvlock": True, "x": 90 },"face=ceiling,facing=east,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "x": 180, "y": 270 },"face=ceiling,facing=west,powered=false":  { "model": f"{setup.modID}:block/{name}_button", "x": 180, "y": 90 },"face=ceiling,facing=south,powered=false": { "model": f"{setup.modID}:block/{name}_button", "x": 180 },"face=ceiling,facing=north,powered=false": { "model": f"{setup.modID}:block/{name}_button", "x": 180, "y": 180 },"face=floor,facing=east,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "y": 90 },"face=floor,facing=west,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "y": 270 },"face=floor,facing=south,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed", "y": 180 },"face=floor,facing=north,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed" },"face=wall,facing=east,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "uvlock": True, "x": 90, "y": 90 },"face=wall,facing=west,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "uvlock": True, "x": 90, "y": 270 },"face=wall,facing=south,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed", "uvlock": True, "x": 90, "y": 180 },"face=wall,facing=north,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed", "uvlock": True, "x": 90 },"face=ceiling,facing=east,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "x": 180, "y": 270 },"face=ceiling,facing=west,powered=true":  { "model": f"{setup.modID}:block/{name}_button_pressed", "x": 180, "y": 90 },"face=ceiling,facing=south,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed", "x": 180 },"face=ceiling,facing=north,powered=true": { "model": f"{setup.modID}:block/{name}_button_pressed", "x": 180, "y": 180 }}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_button.json", write) as file:
+                if (not optionCollectionWood.get()): json.dump({"parent": "block/button","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                                json.dump({"parent": "block/button","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_button_pressed.json", write) as file:
+                if (not optionCollectionWood.get()): json.dump({"parent": "block/button_pressed","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                                json.dump({"parent": "block/button_pressed","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/block/{name}_button_inventory.json", write) as file:
+                if (not optionCollectionWood.get()): json.dump({"parent": "block/button_inventory","textures": {"texture": f"{setup.modID}:block/{name}"}}, file, indent = 4)
+                else:                                json.dump({"parent": "block/button_inventory","textures": {"texture": f"{setup.modID}:block/{name}_planks"}}, file, indent = 4)
+            with open(f"assets/{setup.modID}/models/item/{name}_button.json", write) as file:
+                json.dump({"parent": f"{setup.modID}:block/{name}_button_inventory"}, file, indent = 4)
         elif(type == "plates"):
             pass
         elif(type == "doors"):
@@ -244,6 +260,7 @@ def createFiles(type, name):
     except FileExistsError:
         messagebox.showwarning(title = "File Overwrite", message = "This would overwrite an existing file\nEither delete the existing files or change the overwrite option in DefaultConfig.py")
         exit()
+
 
 def runGenerator(name):
     if(optionCollectionWood.get() or optionCollectionStone.get() or optionCollectionStonePlus.get() or optionCollectionGlass.get() or optionCollectionColour.get()):
@@ -254,10 +271,13 @@ def runGenerator(name):
             createFiles("cube", f"stripped_{name}_wood")
             createFiles("rotatable_three", f"{name}_log")
             createFiles("rotatable_three", f"stripped_{name}_log")
+            createFiles("cross", f"{name}_sapling")
             createFiles("slabs", name)
             createFiles("stairs", name)
             createFiles("fences", name)
-            createFiles("cross", f"{name}_sapling")
+            createFiles("buttons", name)
+            createFiles("plates", name)
+            createFiles("doors", name)
         if(optionCollectionStone.get()):
             pass
         if(optionCollectionStonePlus.get()):
@@ -279,6 +299,11 @@ def runGenerator(name):
         if(optionStairs.get()): createFiles("stairs", name)
         if(optionWalls.get()):  createFiles("walls", name)
         if(optionFences.get()):  createFiles("fences", name)
+        if(optionButtons.get()):  createFiles("buttons", name)
+        if(optionPlates.get()):  createFiles("plates", name)
+        if(optionDoors.get()):  createFiles("doors", name)
+
+
 
 def runConfirmation():
     name = formatString(blockName)
@@ -286,6 +311,7 @@ def runConfirmation():
         messagebox.showwarning(title = "Warning: Null Name", message = "Please enter a name for your block.")
     elif(messagebox.askokcancel(title = "Run Confirmation", message = f"Do you want to run the generator?\nBase Name: \"{name}\"")):
         runGenerator(name)
+
 
 def main():
     notebook = ttk.Notebook(window)
@@ -295,12 +321,12 @@ def main():
     notebook.add(tab2, text = 'Data')
     notebook.pack(fill = BOTH)
 
-    sep1 = ttk.Separator(tab1).grid(row = 0, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep11 = ttk.Separator(tab1).grid(row = 0, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
     insert = ttk.Label(tab1, text = "Insert Block Name:").grid(row = 1, column = 0, padx = 20)
     entry = ttk.Entry(tab1, textvariable = blockName, width = 16).grid(row = 1, column = 1, padx = 20)
 
-    sep2 = ttk.Separator(tab1).grid(row = 2, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep12 = ttk.Separator(tab1).grid(row = 2, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
     menuBlockstate = ttk.Menubutton(tab1, textvariable = menuText, width = 23)
     menuBlockstate.menu = Menu(menuBlockstate)
@@ -318,18 +344,18 @@ def main():
     menuBlockstate.grid(row = 3, columnspan = 2, sticky = "E", padx = 20)
     checkBlock = ttk.Checkbutton(tab1, text = "Block", variable = optionBlock).grid(row = 3, sticky = "W", padx = 20)
 
-    sep3 = ttk.Separator(tab1).grid(row = 4, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep13 = ttk.Separator(tab1).grid(row = 4, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
     checkSlabs = ttk.Checkbutton(tab1, text = "Slabs", variable = optionSlabs).grid(row = 5, sticky = "W", padx = 20)
     checkStairs = ttk.Checkbutton(tab1, text = "Stairs", variable = optionStairs).grid(row = 6, sticky = "W", padx = 20)
     checkWalls = ttk.Checkbutton(tab1, text = "Walls", variable = optionWalls).grid(row = 7, sticky = "W", padx = 20)
     checkFences = ttk.Checkbutton(tab1, text = "Fences", variable = optionFences).grid(row = 8, sticky = "W", padx = 20)
     checkPanes = ttk.Checkbutton(tab1, text = "Panes", variable = optionPanes).grid(row = 9, sticky = "W", padx = 20)
-    checkButtons = ttk.Checkbutton(tab1, text = "Buttons", variable = optionButtons, state = DISABLED).grid(row = 10, sticky = "W", padx = 20)
+    checkButtons = ttk.Checkbutton(tab1, text = "Buttons", variable = optionButtons).grid(row = 10, sticky = "W", padx = 20)
     checkPlates = ttk.Checkbutton(tab1, text = "Pressure Plates", variable = optionPlates, state = DISABLED).grid(row = 11, columnspan = 2, sticky = "W", padx = 20)
     checkDoors = ttk.Checkbutton(tab1, text = "Doors & Trapdoors", variable = optionDoors, state = DISABLED).grid(row = 12, columnspan = 2, sticky = "W", padx = 20)
 
-    sep4 = ttk.Separator(tab1).grid(row = 13, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep14 = ttk.Separator(tab1).grid(row = 13, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
     checkCollectionWood = ttk.Checkbutton(tab1, text = "Wood Collection", variable = optionCollectionWood).grid(row = 14, columnspan = 2, sticky = "W", padx = 20)
     checkCollectionStone = ttk.Checkbutton(tab1, text = "Stone Collection", variable = optionCollectionStone, state = DISABLED).grid(row = 15, columnspan = 2, sticky = "W", padx = 20)
@@ -337,12 +363,13 @@ def main():
     #checkCollectionGlass = ttk.Checkbutton(tab1, text = "Glass Collection", variable = optionCollectionGlass).grid(row = 17, columnspan = 2, sticky = "W", padx = 20)
     checkCollectionColour = ttk.Checkbutton(tab1, text = "Colourful Collection", variable = optionCollectionColour).grid(row = 18, columnspan = 2, sticky = "W", padx = 20)
 
-    sep5 = ttk.Separator(tab1).grid(row = 19, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep15 = ttk.Separator(tab1).grid(row = 19, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
 
     quit = ttk.Button(tab1, text = "Quit", command = exit).grid(row = 20, column = 0, sticky = "W", padx = 20)
     run = ttk.Button(tab1, text = "Run", command = runConfirmation).grid(row = 20, column = 1, sticky = "E", padx = 20)
 
-    sep6 = ttk.Separator(tab1).grid(row = 21, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+    sep16 = ttk.Separator(tab1).grid(row = 21, columnspan = 2, sticky = "WE", padx = 10, pady = 10)
+
 
 main()
 window.mainloop()
